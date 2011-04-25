@@ -1,16 +1,23 @@
 
 from distutils.core import setup, Extension
 
-murmur_ext = Extension('murmur3', sources=[
-    'murmur3.cpp',
-    'smhasher/MurmurHash3.cpp',
-    'smhasher/Platform.cpp'
-    ], include_dirs=['smhasher'])
+# version number is x.[upstream svn revision].release until upstream
+# creates a formal version number.
+VERSION = '0.135.1'
+
+smhasher_ext = Extension('smhasher',
+    sources=[
+        'smhasher.cpp',
+        'smhasher/MurmurHash3.cpp',
+        'smhasher/Platform.cpp'
+    ],
+    include_dirs=['smhasher'],
+    define_macros=[('MODULE_VERSION', '"%s"' % VERSION)])
 
 setup(
-    name='murmur3',
+    name='smhasher',
     version=0.1,
-    description='Python extension for murmur3 hash',
-    ext_modules=[murmur_ext]
+    description='Python extension for smhasher hash functions',
+    ext_modules=[smhasher_ext]
     )
 

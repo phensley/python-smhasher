@@ -2,7 +2,7 @@
 // License: MIT License
 // http://www.opensource.org/licenses/mit-license.php
 
-// Murmur3 code is from SMHasher project, authored by Austin Appleby
+// SMHasher code is from SMHasher project, authored by Austin Appleby, et al.
 // http://code.google.com/p/smhasher/
 
 // Python extension code by Patrick Hensley
@@ -45,22 +45,58 @@ py_murmur3_x64_64(PyObject *self, PyObject *args)
     return PyLong_FromUnsignedLongLong(out[0]);
 }
 
+PyDoc_STRVAR(module_doc, "Python wrapper for the SMHasher routines.");
 
-static PyMethodDef murmur3_methods[] = {
+static PyMethodDef smhasher_methods[] = {
     {"murmur3_x86_64", py_murmur3_x86_64, METH_VARARGS, "Make x86 64-bit hash"},
     {"murmur3_x64_64", py_murmur3_x64_64, METH_VARARGS, "Make x64 64-bit hash"},
     {NULL, NULL, 0, NULL}
 };
 
 
+#if PY_MAJOR_VERSION <= 2
+
 extern "C" PyMODINIT_FUNC
-initmurmur3(void)
+initsmhasher(void)
 {
     PyObject *m;
 
-    m = Py_InitModule("murmur3", murmur3_methods);
+    m = Py_InitModule3("smhasher", smhasher_methods, module_doc);
+
     if (m == NULL)
         return;
+    PyModule_AddStringConstant(m, "__version__", MODULE_VERSION);
 }
 
+#else
+
+/* Python 3.x */
+
+static PyModuleDef smhasher_module = {
+    PyModuleDef_HEAD_INIT,
+    "smhasher",
+    module_doc,
+    -1,
+    smhasher_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+};
+
+extern "C" PyMODINIT_FUNC
+PyInit_smhasher(void)
+{
+    PyObject *m;
+
+    m = PyModule_Create(&smhasher_module);
+    if (m == NULL)
+        goto finally;
+    PyModule_AddStringConstant(m, "__version__", MODULE_VERSION);
+
+finally:
+    return m;
+}
+
+#endif
 
