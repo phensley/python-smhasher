@@ -2,21 +2,31 @@
 import smhasher
 import timeit
 
-print 'smhasher version', smhasher.__version__
+print 'smhasher version: %s\n\n' % smhasher.__version__
 
-# without seed
-print smhasher.murmur3_x86_64('samplebias')
-# with seed value
-print smhasher.murmur3_x86_64('samplebias', 123)
+def demo(name, seed=None):
+    text = 'samplebias'
+    func = getattr(smhasher, name)
+    msg = name
+    if seed:
+        msg += ' seed: %d' % seed
+        res = func(text, seed)
+    else:
+        res = func(text)
+    print '%s\n  %d\n  %s\n' % (msg, res, hex(res))
 
-# 128-bit hashes
-print '128-bit x64:', smhasher.murmur3_x64_128('samplebias')
-print '128-bit x86:', smhasher.murmur3_x86_128('samplebias')
+demo('murmur3_x86_64')
+demo('murmur3_x86_64', 123)
+
+demo('murmur3_x86_128')
+demo('murmur3_x64_128')
+demo('murmur3_x86_128', 123456789)
+
 
 # timing comparison with str __hash__
 t = timeit.Timer("smhasher.murmur3_x86_64('hello')", "import smhasher")
 print 'smhasher.murmur3:', t.timeit()
 
 t = timeit.Timer("str.__hash__('hello')")
-print 'str.__hash__:', t.timeit()
+print '    str.__hash__:', t.timeit()
 
