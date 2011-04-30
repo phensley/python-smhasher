@@ -30,7 +30,7 @@ _py_murmur3_128(PyObject *self, PyObject *args, int x86, int size)
         MurmurHash3_x64_128((void *)key, len, seed, &out);
     }
 
-    return _PyLong_FromByteArray((const unsigned char *)&out, size, 1, 0);
+    return _PyLong_FromByteArray((const unsigned char *)&out, size, 0, 0);
 }
 
 
