@@ -5,6 +5,15 @@ from distutils.core import setup, Extension
 # creates a formal version number.
 VERSION = '0.135.4'
 
+
+import os
+import platform
+if platform.machine() == 'i386':
+  os.environ['ARCHFLAGS']='-arch i386 -arch x86_64'
+# python in os x will use -arch flags that will attempt to make a universal ppc
+# binary. explicitly set the archflags here.
+
+
 smhasher_ext = Extension('smhasher',
     sources=[
         'smhasher.cpp',
@@ -16,7 +25,7 @@ smhasher_ext = Extension('smhasher',
 
 setup(
     name='smhasher',
-    version=0.1,
+    version='0.1',
     description='Python extension for smhasher hash functions',
     ext_modules=[smhasher_ext]
     )

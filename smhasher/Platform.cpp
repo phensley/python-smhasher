@@ -26,16 +26,18 @@ void SetAffinity ( int cpu )
 void SetAffinity ( int /*cpu*/ )
 {
 #ifndef __CYGWIN__
+#ifndef __APPLE__
   cpu_set_t mask;
-    
+
   CPU_ZERO(&mask);
-    
+
   CPU_SET(2,&mask);
-    
+
   if( sched_setaffinity(0,sizeof(mask),&mask) == -1)
   {
     printf("WARNING: Could not set CPU affinity\n");
   }
+#endif
 #endif
 }
 
