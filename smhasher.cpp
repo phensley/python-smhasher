@@ -12,6 +12,13 @@
 #include "MurmurHash3.h"
 
 
+#if PY_VERSION_HEX < 0x02050000
+typedef int Py_ssize_t;
+#define PY_SSIZE_T_MAX INT_MAX
+#define PY_SSIZE_T_MIN INT_MIN
+#endif
+
+
 static PyObject *
 _py_murmur3_128(PyObject *self, PyObject *args, int x86, int size)
 {

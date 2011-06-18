@@ -6,5 +6,17 @@ variants.
 
 License: MIT License
 
+Usage
+-----
 
+    >>> import smhasher
+    >>> [k for k in dir(smhasher) if k[0] == 'm']
+    ['murmur3_x64_128', 'murmur3_x64_64', 'murmur3_x86_128', 'murmur3_x86_64']
+
+    >>> smhasher.murmur3_x86_128('hello')
+    213030289162235495270783145757721615258L
+
+    >>> seed = 1138
+    >>> smhasher.murmur3_x86_128('hello', seed)
+    94758481705480737162820094006203962724L
 
