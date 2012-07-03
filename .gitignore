@@ -3,4 +3,5 @@ smhasher.so
 dist
 MANIFEST
 *.pyc
+.tox
 
