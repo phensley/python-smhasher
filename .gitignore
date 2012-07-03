@@ -2,3 +2,4 @@ build
 smhasher.so
 dist
 MANIFEST
+.tox
