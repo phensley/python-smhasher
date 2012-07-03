@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # load README.txt for the long description
     cwd = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(cwd, 'README.txt')
-    readme = open(path, 'rb').read()
+    readme = open(path, 'r').read()
 
     # call setup
     setup(
