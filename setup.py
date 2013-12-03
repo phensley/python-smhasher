@@ -6,7 +6,7 @@ from distutils.core import setup, Extension
 
 # version number is x.[upstream svn revision].release until upstream
 # creates a formal version number.
-VERSION = '0.136.2'
+VERSION = '0.150'
 
 # avoid building universal binary (ppc) on osx non-ppc platforms
 if sys.platform == 'darwin':

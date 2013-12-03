@@ -2,3 +2,5 @@ build
 smhasher.so
 dist
 MANIFEST
+*.pyc
+
