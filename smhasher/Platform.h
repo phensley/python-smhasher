@@ -40,7 +40,7 @@ void SetAffinity ( int cpu );
 
 #include <stdint.h>
 
-#define	FORCE_INLINE __attribute__((always_inline))
+#define	FORCE_INLINE inline __attribute__((always_inline))
 #define	NEVER_INLINE __attribute__((noinline))
 
 inline uint32_t rotl32 ( uint32_t x, int8_t r )
@@ -72,9 +72,18 @@ inline uint64_t rotr64 ( uint64_t x, int8_t r )
 
 __inline__ unsigned long long int rdtsc()
 {
+#ifdef __x86_64__
+    unsigned int a, d;
+    __asm__ volatile ("rdtsc" : "=a" (a), "=d" (d));
+    return (unsigned long)a | ((unsigned long)d << 32);
+#elif defined(__i386__)
     unsigned long long int x;
     __asm__ volatile ("rdtsc" : "=A" (x));
     return x;
+#else
+#define NO_CYCLE_COUNTER
+    return 0;
+#endif
 }
 
 #include <strings.h>
