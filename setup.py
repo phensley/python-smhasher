@@ -27,13 +27,16 @@ if __name__ == '__main__':
     # load README.txt for the long description
     cwd = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(cwd, 'README.txt')
-    readme = open(path, 'r').read()
+    short_desc = 'Python extension for smhasher hash functions'
+    long_desc = short_desc
+    if os.path.exists(path):
+        long_desc = open(path, 'r').read()
 
     # call setup
     setup(
         name = 'smhasher',
         version = VERSION,
-        description = 'Python extension for smhasher hash functions',
+        description = short_desc,
         author = 'Patrick Hensley',
         author_email = 'spaceboy@indirect.com',
         keywords = ['hash', 'hashing', 'smhasher'],
@@ -55,6 +58,6 @@ if __name__ == '__main__':
             "Programming Language :: Python :: 3.1",
             "Topic :: Software Development :: Libraries :: Python Modules",
             ],
-        long_description = readme,
+        long_description = long_desc
         )
 
